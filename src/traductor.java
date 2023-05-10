@@ -1,12 +1,62 @@
 public class traductor extends MiLenguajeBaseListener{
+    @Override public void enterFor(MiLenguajeParser.ForContext ctx) {
+        System.out.print("for");
+        System.out.print(" (");
+        System.out.print(ctx.getChild(1).getText());
+        System.out.print(";");
+
+        System.out.print(ctx.getChild(1).getChild(0).getText());
+        System.out.print("<");
+        System.out.print(ctx.getChild(3).getText());
+        System.out.print(";");
+        if(ctx.getChild(4).getText()!=""){
+            System.out.print(ctx.getChild(1).getChild(0).getText());
+            System.out.print("=");
+            System.out.print(ctx.getChild(1).getChild(0).getText());
+            System.out.print("+");
+            System.out.print(ctx.getChild(4).getChild(1).getText());
+        }else{
+            System.out.print(ctx.getChild(1).getChild(0).getText());
+            System.out.print("+");
+            System.out.print("+");
+        }
+        System.out.print(")");
+        System.out.print("{\n");
+
+
+
+    }
+    @Override public void exitFor(MiLenguajeParser.ForContext ctx) {
+        System.out.print("\n}");
+    }
+    @Override public void enterStep(MiLenguajeParser.StepContext ctx) {
+        System.out.print(";");
+    }
+
+    @Override public void enterEtiq(MiLenguajeParser.EtiqContext ctx) {
+        System.out.print(ctx.TKN_COLON().getText());
+    }
+    @Override public void enterRoutine(MiLenguajeParser.RoutineContext ctx) {
+        System.out.print("Function() {\n");
+        System.out.print(ctx.ID().getText());
+    }
+    @Override public void exitRoutine(MiLenguajeParser.RoutineContext ctx) {
+        System.out.print("\n}");
+    }
+    @Override public void enterExec(MiLenguajeParser.ExecContext ctx) {
+        System.out.print("(");
+        System.out.print(")");
+    }
+    @Override public void enterMem(MiLenguajeParser.MemContext ctx) {
+        System.out.print(ctx.ID().getText());
+    }
     @Override public void enterA(MiLenguajeParser.AContext ctx) {
         System.out.print(ctx.ID());
     }
     @Override public void enterMemp(MiLenguajeParser.MempContext ctx) {
-        if("era"=="hola"){
-            System.out.print(ctx.getParent());
+        if("[".equals(ctx.getParent().getChild(0).getText())){
+            System.out.print("]");
         }
-        System.out.print(ctx.getParent().getChild(0));
 
     }
     @Override public void enterCorch(MiLenguajeParser.CorchContext ctx) {
@@ -16,9 +66,15 @@ public class traductor extends MiLenguajeBaseListener{
         System.out.print("=");
     }
     @Override public void enterBp(MiLenguajeParser.BpContext ctx) {
-        if(ctx.getChild(0)!=null){
-            System.out.print(ctx.getChild(0));
+        if((ctx.getChild(0)!=null)) {
+            if ((ctx.getChild(0).getText().equals("And"))) {
+                System.out.print("&&");
+
+            } else if ((ctx.getChild(0).getText().equals("Or"))) {
+                System.out.print("||");
+            }
         }
+
 
 
     }

@@ -23,7 +23,7 @@ goto                 : 'Goto' ID    ;
 routine              : 'Sub' ID xorempty 'EndSub'     ;
 xorempty             : x |  ;
 exec                 : TKN_LEFT_PAREN TKN_RIGHT_PAREN   ;
-corch                : TKN_LEFT_BRAC b TKN_RIGHT_BRAC  ;
+corch                : TKN_LEFT_BRAC b TKN_RIGHT_BRAC memp ;
 mem                  : ID memp ;
 memp                 : corch |   ;
 a                    : ID asig;

@@ -1,4 +1,20 @@
 public class traductor extends MiLenguajeBaseListener{
+    @Override public void enterA(MiLenguajeParser.AContext ctx) {
+        System.out.print(ctx.ID());
+    }
+    @Override public void enterMemp(MiLenguajeParser.MempContext ctx) {
+        if("era"=="hola"){
+            System.out.print(ctx.getParent());
+        }
+        System.out.print(ctx.getParent().getChild(0));
+
+    }
+    @Override public void enterCorch(MiLenguajeParser.CorchContext ctx) {
+        System.out.print("[");
+    }
+    @Override public void enterAsigp(MiLenguajeParser.AsigpContext ctx) {
+        System.out.print("=");
+    }
     @Override public void enterBp(MiLenguajeParser.BpContext ctx) {
         if(ctx.getChild(0)!=null){
             System.out.print(ctx.getChild(0));

@@ -277,6 +277,16 @@ public interface MiLenguajeListener extends ParseTreeListener {
 	 */
 	void exitAsig(MiLenguajeParser.AsigContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link MiLenguajeParser#asigp}.
+	 * @param ctx the parse tree
+	 */
+	void enterAsigp(MiLenguajeParser.AsigpContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MiLenguajeParser#asigp}.
+	 * @param ctx the parse tree
+	 */
+	void exitAsigp(MiLenguajeParser.AsigpContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link MiLenguajeParser#b}.
 	 * @param ctx the parse tree
 	 */

@@ -16,7 +16,11 @@ public class Main {
             // Crear el objeto del analizador sintáctico a partir del buffer de tokens
             MiLenguajeParser parser = new MiLenguajeParser(tokens);
             ParseTree tree = parser.s(); // Iniciar el analisis sintáctico en la regla inicial: r
-            System.out.println(tree.toStringTree(parser)); // imprime el arbol al estilo LISP
+            ParseTreeWalker walker = new ParseTreeWalker();
+            // Walk the tree created during the parse, trigger callbacks
+             walker.walk(new traductor(), tree);
+             System.out.println(); // print a \n after translation
+
         } catch (Exception e){
             System.err.println("Error (Test): " + e);
         }

@@ -1,7 +1,7 @@
 grammar MiLenguaje;
 
 
-s                    : routine srecursion |  x routrecursion | EOF;
+s                    : routine srecursion EOF |  x routrecursion EOF | EOF;
 srecursion           : s  | ;
 routrecursion        : routine srecursion    | ;
 x                    : types xrecursion   ;
@@ -38,7 +38,8 @@ e                    : f ep;
 ep                   : TKN_TIMES f ep  | TKN_DIV f ep |   ;
 f                    : TKN_MINUS g | g ;
 g                    : mem | built |TKN_NUMBER | TKN_TEXT| TRUE   |FALSE |TKN_LEFT_PAREN b TKN_RIGHT_PAREN ;
-
+TRUE : ["][Tt][Rr][Uu][Ee]["];
+FALSE: ["][Ff][Aa][Ll][Ss][Ee]["];
 TKN_PERIOD : '.';
 TKN_EQUALS : '=';
 TKN_COMMA : ',';
@@ -58,6 +59,6 @@ TKN_GREATER : '>';
 TKN_GEQ : '>=';
 TKN_NUMBER : [0-9]+[.]?[0-9]*;
 TKN_TEXT : '"'.*?'"';
-TRUE : ["][Tt][Rr][Uu][Ee]["];
-FALSE: ["][Ff][Aa][Ll][Ss][Ee]["];
+
 ID: ([a-zA-Z\u00C0-\u00FF\u0153\u0152])[a-zA-Z\u00C0-\u00FF\u0153\u0152_0-9]*;
+WS    : [ \t\r\n]+ -> skip ;

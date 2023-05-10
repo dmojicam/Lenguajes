@@ -2,3 +2,5 @@ For i = 1 To 24 Step 3
   TextWindow.WriteLine(i)
 EndFor
 
+While (x+6>4)
+

@@ -1,7 +1,19 @@
 public class traductor extends MiLenguajeBaseListener{
+
+    @Override public void enterXorempty(MiLenguajeParser.XoremptyContext ctx) {
+        if ("While".equals(ctx.getParent().getChild(0).getText())){
+            System.out.print(") {\n");
+        }
+    }
+
+    @Override public void enterWhile(MiLenguajeParser.WhileContext ctx) {
+        System.out.print("while (");
+    }
+    @Override public void exitWhile(MiLenguajeParser.WhileContext ctx) {
+        System.out.println("\n}\n");
+    }
     @Override public void enterFor(MiLenguajeParser.ForContext ctx) {
-        System.out.print("for");
-        System.out.print(" (");
+        System.out.print("for (");
         System.out.print(ctx.getChild(1).getText());
         System.out.print(";");
 
@@ -20,14 +32,13 @@ public class traductor extends MiLenguajeBaseListener{
             System.out.print("+");
             System.out.print("+");
         }
-        System.out.print(")");
-        System.out.print("{\n");
+        System.out.print(") {\n");
 
 
 
     }
     @Override public void exitFor(MiLenguajeParser.ForContext ctx) {
-        System.out.print("\n}");
+        System.out.print("\n}\n");
     }
     @Override public void enterStep(MiLenguajeParser.StepContext ctx) {
         System.out.print(";");

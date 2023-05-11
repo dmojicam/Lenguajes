@@ -1,5 +1,26 @@
-If (545 < 12) Then
+don = 4
+arroba:
+For i[7] = 8 To 5 Step 8
+EndFor
 
-EndIf
+Sub mul
+  e = c * d
+EndSub
+
+mul()
+
+For i = 8 To 5
+EndFor
+
+While (545 < 12)
+    While (545 < 12)
+        If (pepe And Tania) Then
+            dani[0 And 9] = a[8]
+            pete = "3"+6
+        ElseIf (pepe = 9) Then
+
+        EndIf
+    EndWhile
+EndWhile
 
 

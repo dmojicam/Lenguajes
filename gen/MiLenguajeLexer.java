@@ -1,4 +1,4 @@
-// Generated from C:/Games/lenguajes3/grammar\MiLenguaje.g4 by ANTLR 4.12.0
+// Generated from C:/Users/Usuario/IdeaProjects/TraductorSmallBasic/Lenguajes/grammar\MiLenguaje.g4 by ANTLR 4.12.0
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.Token;
@@ -145,14 +145,14 @@ public class MiLenguajeLexer extends Lexer {
 	private void AND_action(RuleContext _localctx, int actionIndex) {
 		switch (actionIndex) {
 		case 0:
-			setText("$$");
+			setText(" && ");
 			break;
 		}
 	}
 	private void OR_action(RuleContext _localctx, int actionIndex) {
 		switch (actionIndex) {
 		case 1:
-			setText("||");
+			setText(" || ");
 			break;
 		}
 	}

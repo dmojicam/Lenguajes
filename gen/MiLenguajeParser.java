@@ -1,4 +1,4 @@
-// Generated from C:/Games/lenguajes3/grammar\MiLenguaje.g4 by ANTLR 4.12.0
+// Generated from C:/Users/Usuario/IdeaProjects/TraductorSmallBasic/Lenguajes/grammar\MiLenguaje.g4 by ANTLR 4.12.0
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.*;
@@ -2054,7 +2054,7 @@ public class MiLenguajeParser extends Parser {
 				{
 				setState(258);
 				((CpContext)_localctx).TKN_EQUALS = match(TKN_EQUALS);
-				((CommonToken)((CpContext)_localctx).TKN_EQUALS).setText(this.getRuleNames()[_localctx.getRuleIndex()] == "cp"?"==":"=");
+				((CommonToken)((CpContext)_localctx).TKN_EQUALS).setText("==");
 				setState(260);
 				d();
 				}

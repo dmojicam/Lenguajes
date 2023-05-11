@@ -1,4 +1,4 @@
-// Generated from C:/Games/lenguajes3/grammar\MiLenguaje.g4 by ANTLR 4.12.0
+// Generated from C:/Users/Usuario/IdeaProjects/TraductorSmallBasic/Lenguajes/grammar\MiLenguaje.g4 by ANTLR 4.12.0
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
 /**

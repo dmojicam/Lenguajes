@@ -1,5 +1,7 @@
 public class traductor extends MiLenguajeBaseListener{
-
+    @Override public void enterConditional(MiLenguajeParser.ConditionalContext ctx) {
+        System.out.print("");
+    }
     @Override public void enterXorempty(MiLenguajeParser.XoremptyContext ctx) {
         if ("While".equals(ctx.getParent().getChild(0).getText())){
             System.out.print(") {\n\n");

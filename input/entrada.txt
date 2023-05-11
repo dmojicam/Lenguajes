@@ -1,6 +1,5 @@
-For i = 1 To 24 Step 3
-  TextWindow.WriteLine(i)
-EndFor
+If (545 < 12) Then
 
-While (x+6>4)
+EndIf
+
 

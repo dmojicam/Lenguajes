@@ -52,6 +52,9 @@ public class traductor extends MiLenguajeBaseListener{
 
                 }
             }
+        } else if (ctx.COMMENTS()!= null){
+            System.out.print("// " + ctx.COMMENTS().getText().substring(1,ctx.COMMENTS().getText().length()));
+
         }
 
         Iterator itr = setGuardaIDs.iterator();

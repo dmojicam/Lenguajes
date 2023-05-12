@@ -5,7 +5,7 @@ s                    : routine srecursion EOF |  x routrecursion EOF | EOF;
 srecursion           : s  | ;
 routrecursion        : routine srecursion    | ;
 x                    : types xrecursion   ;
-types                : conditional | for | while | ID xp  |goto |built ;
+types                : conditional | for | while | ID xp  |goto |built | COMMENTS;
 xrecursion           : x | ;
 built                : 'Array' bifunction | 'Stack' bifunction |'Program' bifunction |'TextWindow' bifunction ;
 bifunction           : TKN_PERIOD ID TKN_LEFT_PAREN paramsp TKN_RIGHT_PAREN ;
@@ -38,7 +38,7 @@ dp                   : TKN_PLUS e dp |TKN_MINUS e dp  |  ;
 e                    : f ep;
 ep                   : TKN_TIMES f ep  | TKN_DIV f ep |   ;
 f                    : TKN_MINUS g | g ;
-g                    : mem | built |TKN_NUMBER | TKN_TEXT| TRUE   |FALSE |TKN_LEFT_PAREN b TKN_RIGHT_PAREN ;
+g                    : mem | built |TKN_NUMBER | TKN_TEXT| TRUE   |FALSE |TKN_LEFT_PAREN b TKN_RIGHT_PAREN  ;
 AND : 'And'{setText(" && ");};
 OR  : 'Or'{setText(" || ");};
 TRUE : ["][Tt][Rr][Uu][Ee]["]{setText("true");};
@@ -61,7 +61,9 @@ TKN_LEQ : '<=';
 TKN_GREATER : '>';
 TKN_GEQ : '>=';
 TKN_NUMBER : [0-9]+[.]?[0-9]*;
+COMMENTS : ['] ~[\nEOF]*;
 TKN_TEXT : '"'.*?'"';
-
 ID: ([a-zA-Z\u00C0-\u00FF\u0153\u0152])[a-zA-Z\u00C0-\u00FF\u0153\u0152_0-9]*;
+
 WS    : [ \t\r\n]+ -> skip ;
+

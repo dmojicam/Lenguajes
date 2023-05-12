@@ -1,32 +1,3 @@
-don = 4
-don = 8
-a["hola"][8][1] = 8
-a["hola"][1] = 8
-a[0] = 5
-b[4] = 9
-c[7] = 9
-arroba:
-For i[7] = 8 To 5 Step 8
-EndFor
-
-Sub mul
-  e = c * d
-EndSub
-
-mul()
-
-For i = 8 To 5
-EndFor
-
-While (545 < 12)
-    While (545 < 12)
-        If (pepe And Tania) Then
-            dani[0 And 9] = a[8]
-            pete = "3"+6
-        ElseIf (pepe = 9) Then
-
-        EndIf
-    EndWhile
-EndWhile
-
-
+   'chao
+a[4][5] = b[1] 'chao
+d=9

@@ -11,6 +11,7 @@ public class Main {
                 lexer = new MiLenguajeLexer(CharStreams.fromFileName(args[0]));
             else
                 lexer = new MiLenguajeLexer(CharStreams.fromStream(System.in));
+
             // Identificar al analizador léxico como fuente de tokens para el sintactico
             CommonTokenStream tokens = new CommonTokenStream(lexer);
             // Crear el objeto del analizador sintáctico a partir del buffer de tokens

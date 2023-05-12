@@ -16,13 +16,13 @@ conditional          : 'If' TKN_LEFT_PAREN b TKN_RIGHT_PAREN 'Then' xorempty ei 
 ei                   : 'ElseIf' TKN_LEFT_PAREN b TKN_RIGHT_PAREN 'Then' xorempty ei | else;
 else                 : 'Else' xorempty | ;
 while                : 'While' TKN_LEFT_PAREN b TKN_RIGHT_PAREN xorempty 'EndWhile' ;
-for                  : 'For' a 'To' b step xorempty 'EndFor'  ;
+for                  : 'For' a 'To' b step xorempty 'EndFor' ;
 step                 : 'Step' d  | ;
 etiq                 : TKN_COLON  ;
 goto                 : 'Goto' ID    ;
-routine              : 'Sub' ID xorempty 'EndSub'     ;
+routine              : 'Sub' ID xorempty 'EndSub' ;
 xorempty             : x |  ;
-exec                 : TKN_LEFT_PAREN TKN_RIGHT_PAREN   ;
+exec                 : TKN_LEFT_PAREN TKN_RIGHT_PAREN ;
 corch                : TKN_LEFT_BRAC b TKN_RIGHT_BRAC memp ;
 mem                  : ID memp ;
 memp                 : corch |   ;

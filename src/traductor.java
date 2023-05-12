@@ -1,7 +1,37 @@
-import java.sql.SQLOutput;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
 
 public class traductor extends MiLenguajeBaseListener{
+    Set<String> setGuardaIDs = new HashSet<String>();
     @Override public void enterTypes(MiLenguajeParser.TypesContext ctx) {
+
+        if (ctx.xp() != null){
+            if (ctx.xp().asig() != null){
+                if (ctx.xp().asig().corch() != null){
+                    MiLenguajeParser.CorchContext hijo = ctx.xp().asig().corch();
+                    System.out.println(hijo.getChild(0).getText()+hijo.getChild(1).getText()+hijo.getChild(2).getText());
+                    String corchs = "";
+
+                    while (hijo.memp().corch() != null) {
+                        System.out.println("hijo actual: "+hijo.getChild(0).getText()+hijo.getChild(1).getText()+hijo.getChild(2).getText());
+                        if (!setGuardaIDs.contains(ctx.ID() + corchs)) {
+                            setGuardaIDs.add(ctx.ID() + corchs);
+                            System.out.println(ctx.ID() + corchs+" = {}");
+                        }
+                        corchs = corchs + hijo.getChild(0).getText()+hijo.getChild(1).getText()+hijo.getChild(2).getText();
+                        hijo = hijo.memp().corch();
+                    }
+                }
+            }
+        }
+
+
+
+        Iterator itr = setGuardaIDs.iterator();
+        while (itr.hasNext()) {
+            System.out.println("SET GUARDA IDS: "+itr.next());
+        }
 
         if (ctx.ID() != null){
             if (ctx.xp().etiq() != null){
@@ -9,6 +39,8 @@ public class traductor extends MiLenguajeBaseListener{
             }else {
                 System.out.print(ctx.ID());
             }
+
+
         }
     }
 

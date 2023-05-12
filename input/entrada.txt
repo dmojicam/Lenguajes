@@ -1,5 +1,10 @@
 don = 4
-a[7][8][u] = 8
+don = 8
+a["hola"][8][1] = 8
+a["hola"][1] = 8
+a[0] = 5
+b[4] = 9
+c[7] = 9
 arroba:
 For i[7] = 8 To 5 Step 8
 EndFor

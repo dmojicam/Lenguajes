@@ -3,6 +3,7 @@ import java.util.Iterator;
 import java.util.Set;
 
 public class traductor extends MiLenguajeBaseListener{
+    Set<String> setGuardaIDsArrays = new HashSet<String>();
     Set<String> setGuardaIDs = new HashSet<String>();
     @Override public void enterTypes(MiLenguajeParser.TypesContext ctx) {
 
@@ -10,28 +11,53 @@ public class traductor extends MiLenguajeBaseListener{
             if (ctx.xp().asig() != null){
                 if (ctx.xp().asig().corch() != null){
                     MiLenguajeParser.CorchContext hijo = ctx.xp().asig().corch();
-                    System.out.println(hijo.getChild(0).getText()+hijo.getChild(1).getText()+hijo.getChild(2).getText());
                     String corchs = "";
+                    // Si después del hijo hay más corchetes?
+                    /*if (hijo.b().c().d().e().f().g().mem() != null){
+                        if (hijo.b().c().d().e().f().g().mem().memp() != null){
+                            if (hijo.b().c().d().e().f().g().mem().memp().corch() != null){
+                                System.out.println("hay corch");
+                            }else{
+                                System.out.println("no hay corch");
+                            }
+                        } else{
+                            System.out.println("no hay corch");
+                        }
+                    }else {
+                        System.out.println("no hay corch");
+                    }
+                    */
+                    if (!setGuardaIDsArrays.contains(ctx.ID() + corchs)) {
+                        setGuardaIDsArrays.add(ctx.ID() + corchs);
+                        System.out.println("var "+ctx.ID() + corchs+" = {}");
+                    }
 
                     while (hijo.memp().corch() != null) {
-                        System.out.println("hijo actual: "+hijo.getChild(0).getText()+hijo.getChild(1).getText()+hijo.getChild(2).getText());
-                        if (!setGuardaIDs.contains(ctx.ID() + corchs)) {
-                            setGuardaIDs.add(ctx.ID() + corchs);
+                        corchs = corchs + hijo.getChild(0).getText()+hijo.getChild(1).getText()+hijo.getChild(2).getText();
+                        // System.out.println("hijo actual: "+hijo.getChild(0).getText()+hijo.getChild(1).getText()+hijo.getChild(2).getText());
+                        // System.out.println("ggg"+hijo.memp().corch().getText());
+                        if (!setGuardaIDsArrays.contains(ctx.ID() + corchs)) {
+                            setGuardaIDsArrays.add(ctx.ID() + corchs);
                             System.out.println(ctx.ID() + corchs+" = {}");
                         }
-                        corchs = corchs + hijo.getChild(0).getText()+hijo.getChild(1).getText()+hijo.getChild(2).getText();
+
                         hijo = hijo.memp().corch();
                     }
+                }else {
+                    if (!setGuardaIDs.contains(ctx.ID().getText())){
+                        System.out.print("var ");
+                        setGuardaIDs.add(ctx.ID().getText());
+                    }
+
+
                 }
             }
         }
 
-
-
         Iterator itr = setGuardaIDs.iterator();
-        while (itr.hasNext()) {
+        /*while (itr.hasNext()) {
             System.out.println("SET GUARDA IDS: "+itr.next());
-        }
+        }*/
 
         if (ctx.ID() != null){
             if (ctx.xp().etiq() != null){

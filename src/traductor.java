@@ -1,8 +1,20 @@
+import org.antlr.v4.runtime.ParserRuleContext;
+import org.antlr.v4.runtime.Token;
+import org.antlr.v4.runtime.TokenStream;
+import org.antlr.v4.runtime.TokenStreamRewriter;
+import org.antlr.v4.runtime.tree.TerminalNode;
+
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
 public class traductor extends MiLenguajeBaseListener{
+
+    static TokenStreamRewriter rewriter;
+
+    public traductor(TokenStream tokens){
+        rewriter = new TokenStreamRewriter(tokens);
+    }
     Set<String> setGuardaIDsArrays = new HashSet<String>();
     Set<String> setGuardaIDs = new HashSet<String>();
     @Override public void enterTypes(MiLenguajeParser.TypesContext ctx) {
@@ -12,6 +24,7 @@ public class traductor extends MiLenguajeBaseListener{
                 if (ctx.xp().asig().corch() != null){
                     MiLenguajeParser.CorchContext hijo = ctx.xp().asig().corch();
                     String corchs = "";
+                    String beforeArrays = "";
                     // Si después del hijo hay más corchetes?
                     /*if (hijo.b().c().d().e().f().g().mem() != null){
                         if (hijo.b().c().d().e().f().g().mem().memp() != null){
@@ -26,10 +39,13 @@ public class traductor extends MiLenguajeBaseListener{
                     }else {
                         System.out.println("no hay corch");
                     }
+                    a[t[5]] x
                     */
+
                     if (!setGuardaIDsArrays.contains(ctx.ID() + corchs)) {
                         setGuardaIDsArrays.add(ctx.ID() + corchs);
-                        System.out.println("var "+ctx.ID() + corchs+" = {}");
+                        beforeArrays = beforeArrays + "var "+ctx.ID() + corchs+" = {};\n";
+                        // System.out.println("var "+ctx.ID() + corchs+" = {}");
                     }
 
                     while (hijo.memp().corch() != null) {
@@ -38,23 +54,24 @@ public class traductor extends MiLenguajeBaseListener{
                         // System.out.println("ggg"+hijo.memp().corch().getText());
                         if (!setGuardaIDsArrays.contains(ctx.ID() + corchs)) {
                             setGuardaIDsArrays.add(ctx.ID() + corchs);
-                            System.out.println(ctx.ID() + corchs+" = {}");
+                            beforeArrays = beforeArrays + ctx.ID() +corchs+" = {};\n";
+                            // System.out.println(ctx.ID() + corchs+" = {}");
                         }
 
                         hijo = hijo.memp().corch();
                     }
+                    rewriter.insertBefore(ctx.ID().getSymbol(), beforeArrays);
                 }else {
                     if (!setGuardaIDs.contains(ctx.ID().getText())){
-                        System.out.print("var ");
                         setGuardaIDs.add(ctx.ID().getText());
+                        rewriter.insertBefore(ctx.ID().getSymbol(), "var ");
+                        //System.out.print("var ");
                     }
-
-
                 }
             }
         } else if (ctx.COMMENTS()!= null){
-            System.out.print("// " + ctx.COMMENTS().getText().substring(1,ctx.COMMENTS().getText().length()));
-
+            rewriter.replace(ctx.COMMENTS().getSymbol(), "// " + ctx.COMMENTS().getText().substring(1,ctx.COMMENTS().getText().length()));
+            //System.out.print("// " + ctx.COMMENTS().getText().substring(1,ctx.COMMENTS().getText().length()));
         }
 
         Iterator itr = setGuardaIDs.iterator();
@@ -64,106 +81,108 @@ public class traductor extends MiLenguajeBaseListener{
 
         if (ctx.ID() != null){
             if (ctx.xp().etiq() != null){
-                System.out.print("// "+ctx.ID()+": ");
+                rewriter.insertBefore(ctx.ID().getSymbol(), "//");
             }else {
-                System.out.print(ctx.ID());
+                //System.out.print(ctx.ID());
             }
 
 
         }
     }
 
+    @Override public void enterX(MiLenguajeParser.XContext ctx) {
+
+    }
+
     @Override public void exitTypes(MiLenguajeParser.TypesContext ctx) {
-        System.out.println();
+        rewriter.insertAfter(ctx.stop, "\n");
     }
 
     @Override public void enterXp(MiLenguajeParser.XpContext ctx) {
         if (ctx.exec() != null){
             System.out.print("();");
         }else if (ctx.asig() != null){
-            System.out.print(ctx.asig().getText()+";");
+            //System.out.print(ctx.asig().getText()+";");
         }
         else{
-            System.out.print("// This functionality is not available.");
+            rewriter.replace(ctx.start, ":   --- This functionality is not available.");
         }
     }
 
     @Override public void enterElse(MiLenguajeParser.ElseContext ctx) {
         if (ctx.getChild(0)!=null){
-            System.out.print("} else{\n");
+            rewriter.replace(ctx.getStart(), "} else {\n");
         }
 
     }
     @Override public void enterConditional(MiLenguajeParser.ConditionalContext ctx) {
-
-        System.out.print("if"+"("+ ctx.b().getText()+") "+ "{\n");
+        rewriter.replace(ctx.getStart(), "if ");
+        rewriter.replace( ((TerminalNode)ctx.getChild(4)).getSymbol() , "{\n" );
 
     }
     @Override public void exitConditional(MiLenguajeParser.ConditionalContext ctx) {
 
-        System.out.print("}");
+        rewriter.replace(ctx.stop,"}\n");
 
     }
     @Override public void enterEi(MiLenguajeParser.EiContext ctx) {
         if(ctx.else_()==null){
-            System.out.print("}else if("+ctx.b().getText()+"){\n");
+            rewriter.replace(ctx.getStart(), "} else if ");
+            rewriter.replace( ((TerminalNode)ctx.getChild(4)).getSymbol() , "{\n" );
         }
     }
 
 
     @Override public void enterWhile(MiLenguajeParser.WhileContext ctx) {
 
-        System.out.print("while (");
-        System.out.print(ctx.b().getText());
-        System.out.print(") {\n");
+        rewriter.replace(ctx.getStart(), "while ");
+        rewriter.insertBefore(ctx.xorempty().getStart(), " {\n" );
 
     }
     @Override public void exitWhile(MiLenguajeParser.WhileContext ctx) {
-        System.out.println("}");
+        rewriter.replace(ctx.stop,"}\n" );
     }
     @Override public void enterFor(MiLenguajeParser.ForContext ctx) {
-        System.out.print("for (");
-        String id = "";
+
+        rewriter.replace(ctx.getStart(), "for (");
+
+        String id;
         if (ctx.a().asig().corch() != null){
             id=ctx.a().ID().getText()+ctx.a().asig().corch().getText();
         }else{
             id=ctx.a().ID().getText();
         }
-        System.out.print(ctx.a().getText());
-        System.out.print("; ");
+        // Adds ";" after a()
+        rewriter.insertAfter(ctx.a().getStop(), "; " );
+        // Rewrites "To" into id < ...
+        rewriter.replace(((TerminalNode)ctx.getChild(2)).getSymbol(), id + "<" );
+        // Adds ";" after b()
+        rewriter.insertAfter(ctx.b().getStop() , ";" );
 
-        System.out.print(id);
-        System.out.print("<");
-        System.out.print(ctx.getChild(3).getText());
-        System.out.print("; ");
         if(ctx.getChild(4).getText()!=""){
-            System.out.print(id);
-            System.out.print("=");
-            System.out.print(id);
-            System.out.print("+");
-            System.out.print(ctx.getChild(4).getChild(1).getText());
+            rewriter.replace(ctx.step().getStart(), id + "= " + id + "+");
         }else{
-            System.out.print(id);
-            System.out.print("+");
-            System.out.print("+");
+            rewriter.replace(ctx.step().getStart(), id + "= " + id + "+1");
+
         }
-        System.out.print(") {\n");
+
+        rewriter.insertBefore(ctx.xorempty().getStart(), ") {\n" );
 
 
 
     }
     @Override public void exitFor(MiLenguajeParser.ForContext ctx) {
-        System.out.print("}");
+        rewriter.replace(ctx.stop,"}\n" );
     }
 
     @Override public void enterRoutine(MiLenguajeParser.RoutineContext ctx) {
-        System.out.print("function "+ctx.ID().getText()+"() {\n");
+        rewriter.replace(ctx.getStart(), "function ");
+        rewriter.insertBefore(ctx.xorempty().getStart(), "() {\n" );
 
     }
     @Override public void exitRoutine(MiLenguajeParser.RoutineContext ctx) {
-        System.out.print("}\n");
+        rewriter.replace(ctx.stop,"}\n" );
     }
 
-
-    }
+}
 

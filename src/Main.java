@@ -19,8 +19,8 @@ public class Main {
             ParseTree tree = parser.s(); // Iniciar el analisis sintáctico en la regla inicial: r
             ParseTreeWalker walker = new ParseTreeWalker();
             // Walk the tree created during the parse, trigger callbacks
-             walker.walk(new traductor(), tree);
-             System.out.println(); // print a \n after translation
+             walker.walk(new traductor(tokens), tree);
+             System.out.println(traductor.rewriter.getText()); // print a \n after translation
 
         } catch (Exception e){
             System.err.println("Error (Test): " + e);

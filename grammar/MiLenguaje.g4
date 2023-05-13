@@ -64,6 +64,5 @@ TKN_NUMBER : [0-9]+[.]?[0-9]*;
 COMMENTS : ['] ~[\nEOF]*;
 TKN_TEXT : '"'.*?'"';
 ID: ([a-zA-Z\u00C0-\u00FF\u0153\u0152])[a-zA-Z\u00C0-\u00FF\u0153\u0152_0-9]*;
-
 WS    : [ \t\r\n]+ -> skip ;
 
